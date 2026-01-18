@@ -3,8 +3,17 @@ import random
 largeur = int(input("Entrez la largeur de la carte : "))
 hauteur = int(input("Entrez la hauteur de la carte : "))
 
+demande_seed = input("Voulez-vous entrer une seed ? (o/n) : ")
+if demande_seed.lower() == 'o':
+    seed = int(input("Entrez la seed (nombre entier): "))
+elif demande_seed.lower() == 'n':
+    seed = random.randint(0, 1000000)
+else:
+    print("Entrée invalide. Une seed aléatoire sera utilisée.")
+    seed = random.randint(0, 1000000)
 
-def creer_map(largeur, hauteur):
+def creer_map(largeur, hauteur, seed=None):
+    random.seed(seed)
     l_map = [['.'] * largeur for i in range(hauteur)]
     pourcentage_cailloux = round(0.15 * ((largeur-2) * (hauteur-2)))
 
@@ -56,6 +65,8 @@ def afficher_map(l_map):
 
 
 
-l_map = creer_map(largeur, hauteur)
+l_map = creer_map(largeur, hauteur, seed)
 
 afficher_map(l_map)
+
+print(f"Seed utilisée : {seed}")
